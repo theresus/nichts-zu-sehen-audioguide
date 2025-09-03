@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nichts zu sehen?! Audioguide</title>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Atkinson Hyperlegible', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      background: #000000;
+      color:#ffffff;
+    }
+    .page {
+      flex: 1;
+      display: none;
+      padding: 20px;
+      overflow-y: auto;
+    }
+    .page.active {
+      display: block;
+    }
+    .audio-block {
+      margin-bottom: 25px;
+    }
+    h1, h2, p {
+      margin: 0 0 10px;
+    }
+    h1, h2 {
+        font-size: 4em;
+        margin-bottom: 40px;
+    }
+    p {
+        font-size: 2em;
+    }
+    audio {
+      width: 100%;
+    }
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: black;
+      color: white;
+      padding: 12px 20px;
+      position: sticky;
+      bottom: 0;
+    }
+    .nav button {
+      background: white;
+      color: black;
+      border: none;
+      padding: 16px 24px;
+      cursor: pointer;
+      font-size: 2em;
+      margin: 0 5px;
+      min-width: 110px;
+      font-family: 'Atkinson Hyperlegible', sans-serif;
+      font-weight: 800;
+    }
+
+    /* Mobile Optimierung */
+    @media (max-width: 600px) {
+      .nav {
+        justify-content: center;
+        gap: 20px;
+      }
+      .nav button {
+        flex: 1;
+        max-width: 45%;
+        font-size: 1.3em;
+        padding: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Startseite -->
+  <div class="page active">
+    <h1>Willkommen zur Ausstellung</h1>
+    <div class="audio-block">
+      <p>Einleitung</p>
+      <audio controls>
+        <source src="audio/einleitung.mp3" type="audio/mpeg">
+        Dein Browser unterstützt kein Audio.
+      </audio>
+    </div>
+  </div>
+
+  <!-- Station 1 -->
+  <div class="page">
+    <h2>Station 1</h2>
+    <div class="audio-block">
+      <p>Audio 1</p>
+      <audio controls>
+        <source src="audio/station1a.mp3" type="audio/mpeg">
+      </audio>
+    </div>
+    <div class="audio-block">
+      <p>Audio 2</p>
+      <audio controls>
+        <source src="audio/station1b.mp3" type="audio/mpeg">
+      </audio>
+    </div>
+  </div>
+
+  <!-- Station 2 -->
+  <div class="page">
+    <h2>Station 2</h2>
+    <div class="audio-block">
+      <p>Audio 1</p>
+      <audio controls>
+        <source src="audio/station2a.mp3" type="audio/mpeg">
+      </audio>
+    </div>
+    <div class="audio-block">
+      <p>Audio 2</p>
+      <audio controls>
+        <source src="audio/station2b.mp3" type="audio/mpeg">
+      </audio>
+    </div>
+  </div>
+
+  <!-- Station 3 -->
+  <div class="page">
+    <h2>Station 3</h2>
+    <div class="audio-block">
+      <p>Audio 1</p>
+      <audio controls>
+        <source src="audio/station3a.mp3" type="audio/mpeg">
+      </audio>
+    </div>
+    <div class="audio-block">
+      <p>Audio 2</p>
+      <audio controls>
+        <source src="audio/station3b.mp3" type="audio/mpeg">
+      </audio>
+    </div>
+  </div>
+
+  <!-- Station 4 -->
+  <div class="page">
+    <h2>Station 4</h2>
+    <div class="audio-block">
+      <p>Audio 1</p>
+      <audio controls>
+        <source src="audio/station4a.mp3" type="audio/mpeg">
+      </audio>
+    </div>
+    <div class="audio-block">
+      <p>Audio 2</p>
+      <audio controls>
+        <source src="audio/station4b.mp3" type="audio/mpeg">
+      </audio>
+    </div>
+  </div>
+
+  <!-- Station 5 -->
+  <div class="page">
+    <h2>Station 5</h2>
+    <div class="audio-block">
+      <p>Audio 1</p>
+      <audio controls>
+        <source src="audio/station5a.mp3" type="audio/mpeg">
+      </audio>
+    </div>
+    <div class="audio-block">
+      <p>Audio 2</p>
+      <audio controls>
+        <source src="audio/station5b.mp3" type="audio/mpeg">
+      </audio>
+    </div>
+  </div>
+
+  <!-- Station 6 -->
+  <div class="page">
+    <h2>Station 6</h2>
+    <div class="audio-block">
+      <p>Audio 1</p>
+      <audio controls>
+        <source src="audio/station6a.mp3" type="audio/mpeg">
+      </audio>
+    </div>
+    <div class="audio-block">
+      <p>Audio 2</p>
+      <audio controls>
+        <source src="audio/station6b.mp3" type="audio/mpeg">
+      </audio>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <div class="nav">
+    <button id="prev">< Zurück</button>
+    <button id="next">Weiter ></button>
+  </div>
+
+  <script>
+    const pages = document.querySelectorAll('.page');
+    const prevBtn = document.getElementById('prev');
+    const nextBtn = document.getElementById('next');
+    let current = 0;
+
+    function updatePage() {
+      pages.forEach((p, i) => p.classList.toggle('active', i === current));
+      prevBtn.style.visibility = current === 0 ? 'hidden' : 'visible';
+      nextBtn.style.visibility = current === pages.length - 1 ? 'hidden' : 'visible';
+    }
+
+    prevBtn.addEventListener('click', () => {
+      if (current > 0) current--;
+      updatePage();
+    });
+
+    nextBtn.addEventListener('click', () => {
+      if (current < pages.length - 1) current++;
+      updatePage();
+    });
+
+    updatePage();
+  </script>
+</body>
+</html>
